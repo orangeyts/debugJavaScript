@@ -26,3 +26,7 @@ Note
 - rely on firebug plug-ins 
 - is only used to verify the business logic
 
+Test
+=========
+- JavaScriptDemo is a demo base myEclipse web java project
+
