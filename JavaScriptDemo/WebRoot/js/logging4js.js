@@ -2,6 +2,8 @@ var ua = navigator.userAgent.toLowerCase();
 var isFirefox = (ua.indexOf('firefox') != -1)?true:false;
 //alert("ua: "+ua+"  ,isFirefox: "+isFirefox);
 
+var enbleIEAlert = true;
+
 // debug level, support debug,info,warn，error
 
 var debug_level = 1;
@@ -39,13 +41,14 @@ Log.prototype.init = function(level) { //init method
  * @memberOf {TypeName} 
  */
 Log.prototype.debug = function(msg) { //添加方法  
-    if(isFirefox){
-    	//alert("Log.prototype.level: "+Log.prototype.level);
-    	//alert("debug_level: "+debug_level);
-    	if(Log.prototype.level <= debug_level){
+		//alert("enbleIEAlert: "+enbleIEAlert);
+	if(Log.prototype.level <= debug_level){
+		 if(isFirefox){
 	    	console.debug(msg);
-    	}
-    }
+    	}else if(enbleIEAlert){
+				alert(msg);
+		}
+	}
 };
 
 /**
@@ -53,11 +56,14 @@ Log.prototype.debug = function(msg) { //添加方法
  * @memberOf {TypeName} 
  */
 Log.prototype.info = function(msg) { //添加方法  
-    if(isFirefox){
-    	if(Log.prototype.level <= info_level){
+	if(Log.prototype.level <= info_level){
+	    if(isFirefox){
 	    	console.info(msg);
-    	}
+		}else if(enbleIEAlert){
+			alert(msg);
+		}
     }
+    
 };
 
 /**
@@ -65,10 +71,12 @@ Log.prototype.info = function(msg) { //添加方法
  * @memberOf {TypeName} 
  */
 Log.prototype.warn = function(msg) { //添加方法  
-    if(isFirefox){
-    	if(Log.prototype.level <= warn_level){
+	if(Log.prototype.level <= warn_level){
+	    if(isFirefox){
 	    	console.warn(msg);
-    	}
+		}else if(enbleIEAlert){
+			alert(msg);
+		}
     }
 };
 
@@ -77,18 +85,41 @@ Log.prototype.warn = function(msg) { //添加方法
  * @memberOf {TypeName} 
  */
 Log.prototype.error = function(msg) { //添加方法  
-    if(isFirefox){
-    	//alert("Log.prototype.level: "+Log.prototype.level);
-    	//alert("error_level: "+error_level);
-    	if(Log.prototype.level <= error_level){
+	if(Log.prototype.level <= error_level){
+	    if(isFirefox){
 	    	console.error(msg);
-    	}
+		}else if(enbleIEAlert){
+			alert(msg);
+		}
     }
 };
 
-var log = new Log();
-log.init("warn");
+var log = new Log(); 
+log.init("error");
 
+
+/**
+ * 获得浏览器参数
+ * @use 
+ * 	var request = new QueryStringY();
+ *	var value = unescape(request["key"]);
+ * @memberOf {TypeName} 
+ */
+function QueryStringY(){
+	var name,value,i;
+	var str=location.href;
+	var num=str.indexOf("?");
+	str=str.substr(num+1);
+	var arrtmp=str.split("&");
+	for(i=0;i<arrtmp.length;i++){
+		num=arrtmp[i].indexOf("=");
+		if(num>0){
+			name=arrtmp[i].substring(0,num);
+			value=arrtmp[i].substr(num+1);
+			this[name]=value;
+		}
+	}
+}
 /**
  * TODO
  * if(isFirefox){
